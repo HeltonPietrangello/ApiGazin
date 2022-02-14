@@ -1,6 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\DeveloperController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+Route::get('level', [LevelController::class, 'index'])->name('level.index');
+Route::get('developer', [DeveloperController::class, 'index'])->name('developer.index');

@@ -17,7 +17,9 @@ class DeveloperResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'sex' => $this->sex
+            'sex' => $this->sex,
+            'level_id' => $this->level_id,
+            'birth' => $this->birth
         ];
     }
 }

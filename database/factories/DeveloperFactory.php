@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Level;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
 class DeveloperFactory extends Factory
 {
@@ -15,11 +16,15 @@ class DeveloperFactory extends Factory
     public function definition()
     {
         $name = $this->faker->unique()->word();
+        $birth = $this->faker->dateTimeBetween('-30 days', '+30 days');
+
+        // $date = Carbon::parse(now())->format('Y.m.d');
         
         return [
             'name' => $name,
             'sex' => $this->faker->randomElement([Level::MASCULINE, Level::FEMININE]),
-            'level_id' => Level::all()->random()->id
+            'level_id' => Level::all()->random()->id,
+            'birth' => $birth
         ];
     }
 }

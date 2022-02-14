@@ -17,11 +17,13 @@ class CreateDevelopersTable extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('sex');
+            $table->char('sex');
+            $table->foreignId('level_id')->constrained();
+            $table->dateTime('birth');
 
             // $table->unsignedBigInteger('level_id');
             // $table->foreign('level_id')->references('id')->on('levels');
-            $table->foreignId('level_id')->constrained();
+           
 
             $table->timestamps();
         });

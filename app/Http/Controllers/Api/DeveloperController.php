@@ -68,7 +68,8 @@ class DeveloperController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'sex' => 'required|max:255',
-            'level_id' => 'required|exists:levels,id'
+            'level_id' => 'required|exists:levels,id',
+            'birth' => 'required|max:255'
         ]);
 
         $developer->update($request->all());
