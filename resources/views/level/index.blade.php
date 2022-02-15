@@ -35,9 +35,10 @@
                         <x-label>
                             Nível
                         </x-label>
-
-                        <x-input v-model="createForm.level" type="text" class="w-full mt-1"></x-input>
-
+                        
+                        <input type="text" v-model="createForm.level"
+                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-1"
+                            id="name" name="name">
                     </div>
 
                 </div>
@@ -102,7 +103,9 @@
                     <div>
                         <x-label>Nível</x-label>
 
-                        <x-input v-model="editForm.level" type="text" class="w-full mt-1"></x-input>
+                        <input type="text" v-model="editForm.level"
+                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-1"
+                            id="name" name="name">
 
                     </div>
                 </div>

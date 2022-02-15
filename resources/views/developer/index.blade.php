@@ -24,25 +24,45 @@
                             </ul>
                         </div>
 
+
+                        {{-- Formulário de Cadastro --}}
                         <x-label>Nome</x-label>
                         <input type="text" v-model="createForm.name"
                             class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
                             id="name" name="name">
 
                         <x-label>Sexo</x-label>
-                        <input type="text" v-model="createForm.sex"
-                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
-                            id="sex" name="sex">
+                        <select v-model="createForm.sex"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3">
+                            <option v-for="sexo in sexos" v-bind:value="sexo.valor">
+                                @{{ sexo.texto }}
+                            </option>
+                        </select>
+
 
                         <x-label>Nivel</x-label>
-                        <input type="text" v-model="createForm.level_id"
-                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
-                            id="level_id" name="level_id">
+                        <select v-model="createForm.level_id" id="level_id" name="level_id"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3">
+                            <option v-for="level in levels" v-bind:value="level.id">
+                                @{{ level.level }}
+                            </option>
+                        </select>
 
                         <x-label>Nascimento</x-label>
-                        <input type="date" v-model="createForm.birth"
-                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
+                        <input type="date" v-model="createForm.birth" id="birth" name="birth"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
                             id="birth" name="birth">
+
+                        <x-label>Idade</x-label>
+                        <input type="number" v-model="createForm.age" id="idade" name="idade"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
+                            id="age" name="age">
+
+                        <x-label>Hobby</x-label>
+                        <textarea v-model="createForm.hobby" id="hobby" name="hobby" rows="5" cols="33"
+                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3">
+
+</textarea>
 
                     </div>
                 </div>
@@ -67,21 +87,26 @@
                                 <th class="py-2">Sexo</th>
                                 <th class="py-2">Nível</th>
                                 <th class="py-2">Nascimento</th>
+                                <th class="py-2">Idade</th>
+                                <th class="py-2">Hobby</th>
                                 <th class="py-2"></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-300">
                             <tr v-for="developer in developers">
                                 <td class="py-2">@{{ developer.name }}</td>
-                                <td class="py-2">@{{ developer.sex }}</td>
-                                <td class="py-2">@{{ developer.level_id }}</td>
+                                <td class="py-2">@{{ developer.sex === 'M' ? 'Maculino' : 'Feminino' }}</td>
+                                <td class="py-2">@{{ developer.level }}</td>
                                 <td class="py-2">@{{ developer.birth }}</td>
+                                <td class="py-2">@{{ developer.age }}</td>
+                                <td class="py-2">@{{ developer.hobby }}</td>
+
                                 <td class="flex divide-x divide-gray-300 py-2 float-right">
                                     <a v-on:click="edit(developer)"
                                         class="pr-2 hover:text-blue-600 font-semibold cursor-pointer">Editar</a>
                                     <a class="pl-2 hover:text-red-600 font-semibold cursor-pointer"
                                         v-on:click="destroy(developer)">Eliminar</a>
-                                </td>
+                                </td>                                
                             </tr>
                         </tbody>
                     </table>
@@ -93,7 +118,7 @@
 
         {{-- Modal --}}
         <x-dialog-modal modal="editForm.open">
-            <x-slot name="title">Editar Nível</x-slot>
+            <x-slot name="title">Editar Desenvolvedor</x-slot>
             <x-slot name="content">
                 <div class="space-y-6">
 
@@ -114,20 +139,36 @@
                             id="name" name="name">
 
                         <x-label>Sexo</x-label>
-                        <input type="text" v-model="editForm.sex"
-                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
-                            id="sex" name="sex">
+                        <select v-model="editForm.sex"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3">
+                            <option v-for="sexo in sexos" v-bind:value="sexo.valor">
+                                @{{ sexo.texto }}
+                            </option>
+                        </select>
 
                         <x-label>Nivel</x-label>
-                        <input type="text" v-model="editForm.level_id"
-                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
-                            id="level_id" name="level_id">
+                        <select v-model="editForm.level_id"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3">
+                            <option v-for="level in levels" v-bind:value="level.id">
+                                @{{ level.level }}
+                            </option>
+                        </select>
 
                         <x-label>Nascimento</x-label>
                         <input type="date" v-model="editForm.birth"
                             class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
                             id="birth" name="birth">
 
+                        <x-label>Idade</x-label>
+                        <input type="number" v-model="editForm.age"
+                            class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3"
+                            id="age" name="age">
+
+                        <x-label>Hobby</x-label>
+                        <textarea v-model="editForm.hobby" id="hobby" name="hobby" rows="5" cols="33"
+                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-3">
+
+</textarea>
                     </div>
                 </div>
             </x-slot>
@@ -156,7 +197,9 @@
                         name: null,
                         sex: null,
                         level_id: null,
-                        birth: null
+                        birth: null,
+                        age: null,
+                        hobby: null
                     },
                     editForm: {
                         open: false,
@@ -166,8 +209,18 @@
                         id: null,
                         name: null,
                         sex: null,
-                        level_id: null
-                    }
+                        level_id: null,
+                        age: null,
+                        hobby: null
+                    },
+                    levels: [],
+                    sexos: [{
+                        valor: 'M',
+                        texto: 'Masculino'
+                    }, {
+                        valor: 'F',
+                        texto: 'Feminino'
+                    }]
                 },
                 mounted() {
                     this.getDevelopers();
@@ -178,6 +231,13 @@
                         axios.get('/v1/developers')
                             .then(response => {
                                 this.developers = response.data.data;
+                                console.log(response.data.data);
+                            });
+
+
+                        axios.get('/v1/levels')
+                            .then(response => {
+                                this.levels = response.data.data;
                             });
                     },
 
@@ -190,6 +250,8 @@
                                 this.createForm.sex = null;
                                 this.createForm.level_id = null;
                                 this.createForm.birth = null;
+                                this.createForm.age = null;
+                                this.createForm.hobby = null;
                                 this.createForm.errors = [];
                                 Swal.fire(
                                     'Desenvolvedor criado com sucesso!'
@@ -215,6 +277,8 @@
                         this.editForm.sex = developer.sex;
                         this.editForm.level_id = developer.level_id;
                         this.editForm.birth = developer.birth;
+                        this.editForm.age = developer.age;
+                        this.editForm.hobby = developer.hobby;
                     },
 
                     update() {
@@ -228,9 +292,11 @@
                                 this.editForm.sex = null;
                                 this.editForm.level_id = null;
                                 this.editForm.birth = null;
+                                this.editForm.age = null;
+                                this.editForm.hobby = null;
                                 this.editForm.errors = [];
                                 Swal.fire(
-                                    'Nível atualizado com sucesso!'
+                                    'Desenvolvedor atualizado com sucesso!'
                                 )
 
                                 this.getDevelopers();
@@ -242,6 +308,32 @@
                                 this.editForm.disabled = false;
                             })
                     },
+
+                    destroy(developer) {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                                axios.delete('/v1/developers/' + developer.id)
+                                    .then(response => {
+                                        this.getDevelopers();
+                                    })
+
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                            }
+                        })
+                    }
 
                 }
             });

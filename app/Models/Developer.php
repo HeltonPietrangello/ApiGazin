@@ -11,7 +11,7 @@ class Developer extends Model
 {
     use HasFactory, ApiTrait;
 
-    protected $fillable = ['name', 'sex', 'level_id', 'birth']; 
+    protected $fillable = ['name', 'sex', 'level_id', 'birth', 'age', 'hobby']; 
 
     public function level(){
         return $this->belongsTo(Level::class);

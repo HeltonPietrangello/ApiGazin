@@ -17,6 +17,9 @@ class DeveloperFactory extends Factory
     {
         $name = $this->faker->unique()->word();
         $birth = $this->faker->dateTimeBetween('-30 days', '+30 days');
+        $age = $this->faker->numberBetween($min = 0, $max = 100);
+        $hobby = $this->faker->text($maxNbChars = 15) ;
+
 
         // $date = Carbon::parse(now())->format('Y.m.d');
         
@@ -24,7 +27,9 @@ class DeveloperFactory extends Factory
             'name' => $name,
             'sex' => $this->faker->randomElement([Level::MASCULINE, Level::FEMININE]),
             'level_id' => Level::all()->random()->id,
-            'birth' => $birth
+            'birth' => $birth,
+            'age'=> $age,
+            'hobby'=> $hobby
         ];
     }
 }

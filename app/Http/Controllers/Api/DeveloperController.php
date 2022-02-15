@@ -35,7 +35,10 @@ class DeveloperController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'sex' => 'required|max:255',
-            'level_id' => 'required|exists:levels,id'
+            'level_id' => 'required|exists:levels,id',
+            'birth' => 'required|max:255',
+            'age' => 'required|max:255',
+            'hobby' => 'required|max:255'
         ]);
 
         $developer = Developer::create($request->all());
@@ -51,7 +54,7 @@ class DeveloperController extends Controller
      */
     public function show($id)
     {
-        $developer = Developer::included()->findOrFail($id);
+        $developer = Developer::included()::join('levels', 'developers.level_id', '=', 'levels.id')->select('*')->findOrFail($id);
 
         return DeveloperResource::make($developer);
     }
