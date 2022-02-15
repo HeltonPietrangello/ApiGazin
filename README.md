@@ -1,6 +1,6 @@
 ## Desafio-FullStack
 
-Para executar o programa, favor criar no seu computador uma base de dados chamada, api.gazin.
+Para executar o programa, primeiro passo, criar no seu computador uma base de dados chamada, api.gazin.
 Segundo passo, no prompt de comando executar os comandos abaixo:
 
 - git clone https://github.com/HeltonPietrangello/api.gazin.git
@@ -11,13 +11,13 @@ Segundo passo, no prompt de comando executar os comandos abaixo:
 ## Endpoinst que não foram implementados no Frontend da API
 
 // Campo de busca
-http://127.0.0.1:8000/v1/levels/?filter[level]=COLOCAR AQUI O NOME DO LEVEL QUE DESEJA BUSCAR 
+<p>http://127.0.0.1:8000/v1/levels/?filter[level]=COLOCAR AQUI O NOME DO LEVEL QUE DESEJA BUSCAR </p>
 
 // Ordenar por campo
- http://127.0.0.1:8000/v1/levels/?sort=-level
+ <p>http://127.0.0.1:8000/v1/levels/?sort=-level</p>
 
  // Paginação
-http://127.0.0.1:8000/v1/levels/?page=2
+<p>http://127.0.0.1:8000/v1/levels/?page=2</p>
 
 
 
