@@ -226,24 +226,19 @@
                     this.getDevelopers();
                 },
                 methods: {
-
                     getDevelopers() {
                         axios.get('/v1/developers')
                             .then(response => {
                                 this.developers = response.data.data;
                                 console.log(response.data.data);
                             });
-
-
                         axios.get('/v1/levels')
                             .then(response => {
                                 this.levels = response.data.data;
                             });
                     },
-
                     store() {
                         this.createForm.disabled = true;
-
                         axios.post('/v1/developers', this.createForm)
                             .then(response => {
                                 this.createForm.name = null;
@@ -256,19 +251,13 @@
                                 Swal.fire(
                                     'Desenvolvedor criado com sucesso!'
                                 )
-
                                 this.getDevelopers();
-
                                 this.createForm.disabled = false;
-
                             }).catch(error => {
-
                                 this.createForm.errors = _.flatten(_.toArray(error.response.data.errors));
-
                                 this.createForm.disabled = false;
                             })
                     },
-
                     edit(developer) {
                         this.editForm.open = true;
                         this.editForm.errors = [];
@@ -280,10 +269,8 @@
                         this.editForm.age = developer.age;
                         this.editForm.hobby = developer.hobby;
                     },
-
                     update() {
                         this.editForm.disabled = true;
-
                         axios.put('/v1/developers/' + this.editForm.id, this.editForm)
                             .then(response => {
                                 this.editForm.open = false;
@@ -298,17 +285,12 @@
                                 Swal.fire(
                                     'Desenvolvedor atualizado com sucesso!'
                                 )
-
                                 this.getDevelopers();
-
                             }).catch(error => {
-
                                 this.editForm.errors = _.flatten(_.toArray(error.response.data.errors));
-
                                 this.editForm.disabled = false;
                             })
                     },
-
                     destroy(developer) {
                         Swal.fire({
                             title: 'Deseja realmente deletar o Desenvolvedor?',                           
@@ -319,19 +301,16 @@
                             confirmButtonText: 'Sim, delete agora!'
                         }).then((result) => {
                             if (result.isConfirmed) {
-
                                 axios.delete('/v1/developers/' + developer.id)
                                     .then(response => {
                                         this.getDevelopers();
                                     })
-
                                 Swal.fire(
                                     'Deletado com sucesso!'
                                 )
                             }
                         })
                     }
-
                 }
             });
         </script>

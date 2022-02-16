@@ -36,7 +36,7 @@
                         <x-label>
                             Nível
                         </x-label>
-                        
+
                         <input type="text" v-model="createForm.level" id="level" name="level"
                             class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-1"
                             id="name" name="name">
@@ -125,7 +125,6 @@
 
 
     @push('js')
-
         <script>
             new Vue({
                 el: "#app",
@@ -158,7 +157,6 @@
                     },
                     store() {
                         this.createForm.disabled = true;
-
                         axios.post('/v1/levels', this.createForm)
                             .then(response => {
                                 this.createForm.level = null;
@@ -166,29 +164,21 @@
                                 Swal.fire(
                                     'Nível criado com sucesso!'
                                 )
-
                                 this.getLevels();
-
                                 this.createForm.disabled = false;
-
                             }).catch(error => {
-
                                 this.createForm.errors = _.flatten(_.toArray(error.response.data.errors));
-
                                 this.createForm.disabled = false;
                             })
                     },
-
                     edit(level) {
                         this.editForm.open = true;
                         this.editForm.errors = [];
                         this.editForm.id = level.id;
                         this.editForm.level = level.level;
                     },
-
                     update() {
                         this.editForm.disabled = true;
-
                         axios.put('/v1/levels/' + this.editForm.id, this.editForm)
                             .then(response => {
                                 this.editForm.open = false;
@@ -198,49 +188,41 @@
                                 Swal.fire(
                                     'Nível atualizado com sucesso!'
                                 )
-
                                 this.getLevels();
-
                             }).catch(error => {
-
                                 this.editForm.errors = _.flatten(_.toArray(error.response.data.errors));
-
                                 this.editForm.disabled = false;
                             })
                     },
-                    destroy(level) {                        
+                    destroy(level) {
+                        // console.log(level);
                         Swal.fire({
-                            title: 'Deseja realmente deletar o Nível?',    
-                            title: 'varia',    
+                            title: 'Deseja realmente deletar o Nível?',
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
-                            confirmButtonText: 'Sim, deletar agora!'
+                            confirmButtonText: 'Sim, delete agora!'
                         }).then((result) => {
-
                             if (result.isConfirmed) {
 
                                 axios.delete('/v1/levels/' + level.id)
                                     .then(response => {
+                                        Swal.fire(
+                                            'Deletado com sucesso!'
+                                        )
                                         this.getLevels();
+                                    }).catch(() => {
+                                        Swal.fire(
+                                            'Desenvolvedor(es) associado a este Nível!'                                            
+                                        )
                                     })
-
-                                    axios.delete('/v1/levels/' + level.id)
-                                    .then(response => {
-                                        this.getLevels();
-                                    })
-
-                                Swal.fire(
-                                    'Deletado com sucesso!'
-                                )
                             }
                         })
                     }
                 }
             });
         </script>
-
     @endpush
 
 </x-app-layout>

@@ -3,7 +3,7 @@
 Para executar o programa, primeiro passo; criar no seu computador uma base de dados chamada, api.gazin.</br></br>
 Segundo passo; abrir o prompt de comando, acessar a pasta do projeto e executar os comandos abaixo:
 
-- git clone https://github.com/HeltonPietrangello/api.gazin.git
+- git clone https://github.com/HeltonPietrangello/ApiGazinTech
 - composer install
 - php artisan migrate
 - php artisan serve
