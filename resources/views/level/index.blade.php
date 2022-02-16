@@ -8,6 +8,7 @@
     <div id="app">
 
         <x-container class="py-8">
+
             {{-- Cadastrar Level --}}
             <x-form-section class="mb-12">
                 <x-slot name="title">
@@ -36,7 +37,7 @@
                             Nível
                         </x-label>
                         
-                        <input type="text" v-model="createForm.level"
+                        <input type="text" v-model="createForm.level" id="level" name="level"
                             class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-1"
                             id="name" name="name">
                     </div>
@@ -103,7 +104,7 @@
                     <div>
                         <x-label>Nível</x-label>
 
-                        <input type="text" v-model="editForm.level"
+                        <input type="text" v-model="editForm.level" id="level" name="level"
                             class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-1"
                             id="name" name="name">
 

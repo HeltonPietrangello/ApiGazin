@@ -188,7 +188,8 @@ return [
         'current_password' => 'senha atual',
         'level_id' => 'nível',        
         'birth ' => 'nascimento',          
-        'hobby ' => 'hobby '        
+        'hobby ' => 'hobby',
+        'level' => 'nível'      
     ],
 
 ];
