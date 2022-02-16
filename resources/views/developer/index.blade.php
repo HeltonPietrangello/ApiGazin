@@ -326,7 +326,7 @@
                                     })
 
                                 Swal.fire(
-                                    'Deletado com sucesso!'                                   
+                                    'Deletado com sucesso!'
                                 )
                             }
                         })

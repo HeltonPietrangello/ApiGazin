@@ -207,18 +207,17 @@
                                 this.editForm.disabled = false;
                             })
                     },
-
-                    destroy(level) {
-                        // console.log(level);
+                    destroy(level) {                        
                         Swal.fire({
-                            title: 'Are you sure?',
-                            text: "You won't be able to revert this!",
+                            title: 'Deseja realmente deletar o Nível?',    
+                            title: 'varia',    
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, delete it!'
+                            confirmButtonText: 'Sim, deletar agora!'
                         }).then((result) => {
+
                             if (result.isConfirmed) {
 
                                 axios.delete('/v1/levels/' + level.id)
@@ -226,10 +225,13 @@
                                         this.getLevels();
                                     })
 
+                                    axios.delete('/v1/levels/' + level.id)
+                                    .then(response => {
+                                        this.getLevels();
+                                    })
+
                                 Swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
-                                    'success'
+                                    'Deletado com sucesso!'
                                 )
                             }
                         })
