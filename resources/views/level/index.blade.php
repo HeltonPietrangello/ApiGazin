@@ -12,7 +12,7 @@
             {{-- Cadastrar Level --}}
             <x-form-section class="mb-12">
                 <x-slot name="title">
-                    Cradastrar Nível
+                    Cradastrar Nível 1
                 </x-slot>
 
                 <x-slot name="description">
@@ -59,19 +59,48 @@
                     Aqui se encontra a lista de Níveis cadastrados.
                 </x-slot>
 
+                <div class="flex">
+
+                    <input type="text" v-model="busca" id="busca" name="busca" placeholder="Digite sua busca"
+                        class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-1">
+
+                    <x-button v-on:click="getLevels">Buscar</x-button>
+
+                    <x-buttonRed v-on:click="limparBusca">Limpar</x-button>
+
+                </div>
+
+                <div style="margin-top: 30px; margin-bottom: 20px;" v-on:click="ordenar()" id="oi">Clique aqui para ordenar</div>
+
                 <div>
-                    <table class="text-gray-600 min-w-full">
+                    <table class="text-gray-600 min-w-full mt-8">
                         <thead class="border-b border-gray-300 bg-gray-100">
                             <tr class="text-left">
-                                <th class="py-2 w-full">Nível</th>
+                                <th class="py-2">Nível</th>
+                                <th class="py-2 w-full">Desenvolvedores Associados</th>
                                 <th class="py-2">Ação</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-300">
-                            <tr v-for="level in levels">
-                                <td class="py-2">
+                            <tr v-for="(level, index) in levels">
+                                <td class="py-2" width="20%">
                                     @{{ level.level }}
                                 </td>
+
+
+
+
+                                
+
+                                <td class="py-2">
+                                    @{{ quantity[index]?.developers.length }}
+                                </td>
+
+
+
+
+
+
                                 <td class="flex divide-x divide-gray-300 py-2">
                                     <a v-on:click="edit(level)"
                                         class="pr-2 hover:text-blue-600 font-semibold cursor-pointer">Editar</a>
@@ -129,12 +158,16 @@
             new Vue({
                 el: "#app",
                 data: {
+                    busca: '',
                     levels: [],
+                    quantity: [],
+                    developers: [],
                     createForm: {
                         errors: [],
                         disabled: false,
                         errors: [],
-                        level: null
+                        level: null,
+                        developers: [],
                     },
                     editForm: {
                         open: false,
@@ -142,18 +175,28 @@
                         disabled: false,
                         errors: [],
                         id: null,
-                        level: null
-                    }
+                        level: null,
+                        developers: [],
+                    },
                 },
                 mounted() {
                     this.getLevels();
+                    this.qnantity();  
                 },
                 methods: {
                     getLevels() {
-                        axios.get('/v1/levels')
+                        let url = '/v1/levels';
+                        if (this.busca) {
+                            url = url + '/?filter[level]=' + this.busca;
+                        }
+                        axios.get(url)
                             .then(response => {
                                 this.levels = response.data.data;
                             });
+                    },
+                    limparBusca() {
+                        this.busca = '';
+                        this.getLevels();
                     },
                     store() {
                         this.createForm.disabled = true;
@@ -214,12 +257,36 @@
                                         this.getLevels();
                                     }).catch(() => {
                                         Swal.fire(
-                                            'Desenvolvedor(es) associado a este Nível!'                                            
+                                            'Desenvolvedor(es) associado a este Nível!'
                                         )
                                     })
                             }
                         })
-                    }
+                    },
+                    qnantity() {
+                        axios.get('/v1/levels/?included=developers')
+                            .then(response => {
+                                this.quantity = response.data.data;
+                            });
+                    },
+                    ordenar() { 
+                        if(this.isActive == true){
+                            axios.get('/v1/levels/?sort=-level')
+                                .then(response => {
+                                    this.levels = response.data.data;
+                                    
+                                });                                
+                        }
+                        else{
+                            axios.get('/v1/levels/?sort=level')
+                                .then(response => {
+                                    this.levels = response.data.data;
+                                   
+                                });                               
+                        }  
+
+                        this.isActive = !this.isActive; 
+                    },
                 }
             });
         </script>

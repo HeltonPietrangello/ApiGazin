@@ -72,7 +72,7 @@
             </x-form-section>
 
             {{-- Mostrar Desenvolvedores --}}
-            <x-form-section v-if="developers.length > 0">
+            <x-form-section>
                 <x-slot name="title">
                     Lista de Desenvolvedor
                 </x-slot>
@@ -80,8 +80,22 @@
                     Aqui se encontra a lista de Níveis cadastrados.
                 </x-slot>
                 <div>
+                    <div class="flex">
+
+                        <input type="text" v-model="busca" id="busca" name="busca" placeholder="Digite sua busca"
+                            class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mt-1">
+
+                        <x-button v-on:click="getDevelopers">Buscar</x-button>
+
+
+                        <x-buttonRed v-on:click="limparBusca">Limpar</x-button>
+                    </div>
+
+                    <div style="margin-top: 30px; margin-bottom: 20px;" v-on:click="ordenar()" id="oi">Clique aqui para ordenar</div>
+
                     <table class="text-gray-600 min-w-full">
                         <thead class="border-b border-gray-300 bg-gray-100">
+
                             <tr class="text-left">
                                 <th class="py-2">Nome</th>
                                 <th class="py-2">Sexo</th>
@@ -106,7 +120,7 @@
                                         class="pr-2 hover:text-blue-600 font-semibold cursor-pointer">Editar</a>
                                     <a class="pl-2 hover:text-red-600 font-semibold cursor-pointer"
                                         v-on:click="destroy(developer)">Eliminar</a>
-                                </td>                                
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -189,6 +203,7 @@
             new Vue({
                 el: "#app",
                 data: {
+                    busca: '',
                     developers: [],
                     createForm: {
                         errors: [],
@@ -199,7 +214,8 @@
                         level_id: null,
                         birth: null,
                         age: null,
-                        hobby: null
+                        hobby: null,
+                        isActive: true
                     },
                     editForm: {
                         open: false,
@@ -224,14 +240,26 @@
                 },
                 mounted() {
                     this.getDevelopers();
+                    this.getLevels();
                 },
                 methods: {
                     getDevelopers() {
-                        axios.get('/v1/developers')
+                        let url = '/v1/developers';
+                        if (this.busca) {
+                            url = url + '/?filter[name]=' + this.busca;
+                            // console.log(this.busca);
+                        }
+                        axios.get(url)
                             .then(response => {
                                 this.developers = response.data.data;
-                                console.log(response.data.data);
+                                // console.log(response.data.data);
                             });
+                    },
+                    limparBusca() {
+                        this.busca = '';
+                        this.getDevelopers();
+                    },
+                    getLevels() {
                         axios.get('/v1/levels')
                             .then(response => {
                                 this.levels = response.data.data;
@@ -293,7 +321,7 @@
                     },
                     destroy(developer) {
                         Swal.fire({
-                            title: 'Deseja realmente deletar o Desenvolvedor?',                           
+                            title: 'Deseja realmente deletar o Desenvolvedor?',
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -310,6 +338,22 @@
                                 )
                             }
                         })
+                    },
+                    ordenar() { 
+                        if(this.isActive == true){
+                            axios.get('/v1/developers/?sort=-name')
+                                .then(response => {
+                                    this.developers = response.data.data;
+                                });                                
+                        }
+                        else{
+                            axios.get('/v1/developers/?sort=name')
+                                .then(response => {
+                                    this.developers = response.data.data;
+                                });                               
+                        }  
+
+                        this.isActive = !this.isActive; 
                     }
                 }
             });

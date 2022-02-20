@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 
 class DeveloperController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {
         $developer = Developer::included()
@@ -24,12 +20,6 @@ class DeveloperController extends Controller
         return DeveloperResource::collection($developer);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -46,12 +36,7 @@ class DeveloperController extends Controller
         return DeveloperResource::make($developer);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Developer  $developer
-     * @return \Illuminate\Http\Response
-     */
+   
     public function show($id)
     {
         $developer = Developer::included()::join('levels', 'developers.level_id', '=', 'levels.id')->select('*')->findOrFail($id);
@@ -59,13 +44,7 @@ class DeveloperController extends Controller
         return DeveloperResource::make($developer);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Developer  $developer
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Developer $developer)
     {
         $request->validate([
@@ -80,12 +59,7 @@ class DeveloperController extends Controller
         return DeveloperResource::make($developer);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Developer  $developer
-     * @return \Illuminate\Http\Response
-     */
+  
     public function destroy(Developer $developer)
     {
         $developer->delete();

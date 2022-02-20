@@ -31,14 +31,12 @@ trait ApiTrait{
         if (empty($this->allowFilter) || empty(request('filter'))) {
             return;
         }
-
         $filters = request('filter');
         $allowFilter = collect($this->allowFilter);
 
         foreach ($filters as $filter => $value) {
 
             if ($allowFilter->contains($filter)) {
-
                 $query->where($filter, 'LIKE', '%' . $value . '%');
             }
         }
@@ -74,16 +72,17 @@ trait ApiTrait{
     public function scopeGetOrPaginate(Builder $query)
     {
 
-        if (request(('perPage'))) {
+        // dd($query);
+        if (request(('page'))) {
 
-            $perPage = intval(request('perPage'));
+            $page = intval(request('page'));
 
-            if ($perPage) {
+            if ($page) {
 
-                return $query->paginate($perPage);
+                return $query->paginate();
             }
         }
-
+        
         return $query->get();
     }
 

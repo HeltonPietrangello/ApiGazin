@@ -19,7 +19,7 @@ class CreateDevelopersTable extends Migration
             $table->string('name');
             $table->char('sex');
             $table->foreignId('level_id')->constrained();
-            $table->dateTime('birth');
+            $table->date('birth');
             $table->integer('age');
             $table->string('hobby');
 
