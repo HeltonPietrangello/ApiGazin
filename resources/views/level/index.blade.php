@@ -87,21 +87,9 @@
                                 <td class="py-2" width="20%">
                                     @{{ level.level }}
                                 </td>
-
-
-
-
-
-
                                 <td class="py-2">
                                     @{{ quantity[index]?.developers.length }}
                                 </td>
-
-
-
-
-
-
                                 <td class="flex divide-x divide-gray-300 py-2">
                                     <a v-on:click="edit(level)"
                                         class="pr-2 hover:text-blue-600 font-semibold cursor-pointer">Editar</a>
