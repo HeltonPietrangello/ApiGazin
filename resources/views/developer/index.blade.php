@@ -91,7 +91,7 @@
                         <x-buttonRed v-on:click="limparBusca">Limpar</x-button>
                     </div>
 
-                    <div style="margin-top: 30px; margin-bottom: 20px;" v-on:click="ordenar()" id="oi">Clique aqui para ordenar</div>
+                    <div style="margin-top: 30px; margin-bottom: 20px; cursor:pointer" v-on:click="ordenar()" id="oi">Clique aqui para ordenar</div>
 
                     <table class="text-gray-600 min-w-full">
                         <thead class="border-b border-gray-300 bg-gray-100">

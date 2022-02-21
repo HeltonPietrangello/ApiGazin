@@ -70,7 +70,8 @@
 
                 </div>
 
-                <div style="margin-top: 30px; margin-bottom: 20px;" v-on:click="ordenar()" id="oi">Clique aqui para ordenar</div>
+                <div style="margin-top: 30px; margin-bottom: 20px; cursor:pointer" v-on:click="ordenar()" id="oi">Clique aqui para
+                    ordenar</div>
 
                 <div>
                     <table class="text-gray-600 min-w-full mt-8">
@@ -90,7 +91,7 @@
 
 
 
-                                
+
 
                                 <td class="py-2">
                                     @{{ quantity[index]?.developers.length }}
@@ -181,7 +182,7 @@
                 },
                 mounted() {
                     this.getLevels();
-                    this.qnantity();  
+                    this.qnantity();
                 },
                 methods: {
                     getLevels() {
@@ -193,6 +194,8 @@
                             .then(response => {
                                 this.levels = response.data.data;
                             });
+
+                        this.qnantity();
                     },
                     limparBusca() {
                         this.busca = '';
@@ -269,23 +272,22 @@
                                 this.quantity = response.data.data;
                             });
                     },
-                    ordenar() { 
-                        if(this.isActive == true){
+                    ordenar() {
+                        if (this.isActive == true) {
                             axios.get('/v1/levels/?sort=-level')
                                 .then(response => {
                                     this.levels = response.data.data;
-                                    
-                                });                                
-                        }
-                        else{
+
+                                });
+                        } else {
                             axios.get('/v1/levels/?sort=level')
                                 .then(response => {
                                     this.levels = response.data.data;
-                                   
-                                });                               
-                        }  
 
-                        this.isActive = !this.isActive; 
+                                });
+                        }
+
+                        this.isActive = !this.isActive;
                     },
                 }
             });
